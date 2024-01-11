@@ -1,9 +1,9 @@
-from tempfile import NamedTemporaryFile
-import aiofiles
-import pytest
 import os
+from tempfile import NamedTemporaryFile
 
-from aiocsv import AsyncReader, AsyncWriter
+import aiofiles
+
+from nscsv import AsyncReader, AsyncWriter
 
 FILENAME = "tests/math_constants.csv"
 HEADER = ["name", "value"]
@@ -15,14 +15,12 @@ VALUES = [
 ]
 
 
-@pytest.mark.asyncio
 async def test_simple_read():
     async with aiofiles.open(FILENAME, mode="r", encoding="ascii", newline="") as af:
         read_rows = [i async for i in AsyncReader(af)]
         assert read_rows == VALUES
 
 
-@pytest.mark.asyncio
 async def test_simple_write():
     # Create a TempFile to direct writer to
     with NamedTemporaryFile(mode="w+", suffix=".csv", delete=False) as tf:

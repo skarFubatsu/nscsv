@@ -1,9 +1,9 @@
-from tempfile import NamedTemporaryFile
-import aiofiles
-import pytest
 import os
+from tempfile import NamedTemporaryFile
 
-from aiocsv import AsyncReader, AsyncWriter
+import aiofiles
+
+from nscsv import AsyncReader, AsyncWriter
 
 FILENAME = "tests/eu_cities_unix.csv"
 PARAMS = {"dialect": "unix"}
@@ -16,14 +16,12 @@ VALUES = [
 ]
 
 
-@pytest.mark.asyncio
 async def test_dialect_read():
     async with aiofiles.open(FILENAME, mode="r", encoding="ascii", newline="") as afp:
         read_rows = [i async for i in AsyncReader(afp, **PARAMS)]
         assert read_rows == VALUES
 
 
-@pytest.mark.asyncio
 async def test_dialect_write():
     # Create a TempFile to direct writer to
     with NamedTemporaryFile(mode="w+", suffix=".csv", delete=False) as tf:

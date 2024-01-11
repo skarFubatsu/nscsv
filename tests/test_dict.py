@@ -1,10 +1,10 @@
-from tempfile import NamedTemporaryFile
-import aiofiles
-import pytest
 import csv
 import os
+from tempfile import NamedTemporaryFile
 
-from aiocsv import AsyncDictReader, AsyncDictWriter
+import aiofiles
+
+from nscsv import AsyncDictReader, AsyncDictWriter
 
 FILENAME = "tests/metro_systems.tsv"
 PARAMS = {"delimiter": "\t", "quotechar": "'", "quoting": csv.QUOTE_ALL}
@@ -19,14 +19,12 @@ VALUES = [dict(zip(HEADER, i)) for i in [
 ]]
 
 
-@pytest.mark.asyncio
 async def test_dict_read():
     async with aiofiles.open(FILENAME, mode="r", encoding="ascii", newline="") as afp:
         read_rows = [i async for i in AsyncDictReader(afp, **PARAMS)]
         assert read_rows == VALUES
 
 
-@pytest.mark.asyncio
 async def test_dict_write():
     # Create a TempFile to direct writer to
     with NamedTemporaryFile(mode="w+", suffix=".csv", delete=False) as tf:

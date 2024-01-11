@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nscsv"
+dynamic = ["version"]
+description = "csv support for asyncio"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.9"
+authors = [{ name = "Ajay Sonkar" }]
+urls = { Repository = "https://github.com/skarFubatsu/nscsv" }
+dependencies = ["aiofiles"]
+
+[project.optional-dependencies]
+tests = ["pytest>=7.4.4", "pytest-asyncio"]
+
+[tool.setuptools]
+py-modules = ["nscsv"]
+
+[tool.setuptools.dynamic]
+version = { attr = "nscsv.__version__" }
+
+[tool.hatch.version]
+path = "nscsv/__init__.py"
+
+[tool.pytest.ini_options]
+minversion = "7.4.4"
+asyncio_mode = "auto"
+testpaths = ["tests"]
+console_output_style = "count"

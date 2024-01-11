@@ -1,7 +1,6 @@
 import aiofiles
-import pytest
 
-from aiocsv import AsyncDictReader, AsyncReader
+from nscsv import AsyncDictReader, AsyncReader
 
 DIALECT_PARAMS = {"escapechar": "$", "lineterminator": "\n"}
 FILENAME = "tests/newlines.csv"
@@ -13,14 +12,12 @@ READ_VALUES = [
 ]
 
 
-@pytest.mark.asyncio
-async def test_newline_read():
+async def test_newline_read(): 
     async with aiofiles.open(FILENAME, mode="r", encoding="ascii", newline="") as af:
         read_rows = [i async for i in AsyncReader(af, **DIALECT_PARAMS)]
         assert read_rows == [HEADER] + READ_VALUES
 
 
-@pytest.mark.asyncio
 async def test_newline_dict_read():
     async with aiofiles.open(FILENAME, mode="r", encoding="ascii", newline="") as af:
         read_rows = [i async for i in AsyncDictReader(af, **DIALECT_PARAMS)]
