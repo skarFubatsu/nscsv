@@ -29,3 +29,13 @@ minversion = "7.4.4"
 asyncio_mode = "auto"
 testpaths = ["tests"]
 console_output_style = "count"
+
+[tool.pylint]
+ignore = ["tests", "setup.py"]
+max-line-length = 120
+
+[tool.ruff]
+extend-exclude = ["tests"]
+line-length = 120
+ignore-init-module-imports = true
+show-fixes = true
